@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">ShieldX Mobile</string>
+    <string name="app_title">ShieldX Mobile</string>
+    <string name="app_subtitle">SMS धोखाधड़ी पहचान ऐप</string>
+
+    <string name="language_title">भाषा</string>
+    <string name="select_language">भाषा चुनें</string>
+
+    <string name="privacy_title">गोपनीयता &amp; ऑटो सुरक्षा</string>
+    <string name="privacy_info">ShieldX आपके डिवाइस पर ही SMS स्कैन करता है। हम आपके निजी SMS को क्लाउड पर अपलोड नहीं करते। Auto SMS Protection वैकल्पिक है और आप इसे कभी भी बंद कर सकते हैं।</string>
+
+    <string name="enable_auto_sms">ऑटो SMS सुरक्षा चालू करें</string>
+    <string name="auto_protection_off">ऑटो सुरक्षा: बंद</string>
+    <string name="auto_protection_on">ऑटो सुरक्षा: चालू</string>
+
+    <string name="sender_hint">भेजने वाले का नाम या नंबर</string>
+    <string name="message_hint">यहाँ SMS पेस्ट करें...</string>
+    <string name="scan_message">संदेश स्कैन करें</string>
+    <string name="clear">साफ करें</string>
+
+    <string name="risk_default">जोखिम: 0%%</string>
+    <string name="category_default">श्रेणी: स्कैन नहीं हुआ</string>
+    <string name="result_default">रिजल्ट यहाँ दिखेगा</string>
+    <string name="summary_default">सारांश यहाँ दिखेगा</string>
+
+    <string name="history_title">स्कैन हिस्ट्री</string>
+    <string name="history_default">अभी कोई हिस्ट्री नहीं है</string>
+
+    <string name="enter_message_first">कृपया पहले एक संदेश दर्ज करें।</string>
+    <string name="enter_details">कृपया sender और message details दर्ज करें।</string>
+    <string name="unknown_sender">अज्ञात प्रेषक</string>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvPinTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ShieldX Security"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/tvPinSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set or enter your 4-digit admin PIN"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/etPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter 4-digit PIN"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnPinAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continue" />
+
+    <TextView
+        android:id="@+id/tvPinMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="15sp"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

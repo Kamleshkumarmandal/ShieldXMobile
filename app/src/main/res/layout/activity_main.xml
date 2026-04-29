@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_title"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_subtitle"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvLanguageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/language_title"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinnerLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#F3F4F6"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tvPrivacyTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_title"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvPrivacyInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_info"
+                android:textSize="14sp"
+                android:layout_marginBottom="12dp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchAutoProtection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enable_auto_sms" />
+
+            <TextView
+                android:id="@+id/tvProtectionStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/auto_protection_off"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etSender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sender_hint"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:hint="@string/message_hint"
+            android:gravity="top|start"
+            android:padding="12dp"
+            android:inputType="textMultiLine"
+            android:minLines="6"
+            android:maxLines="8" />
+
+        <Button
+            android:id="@+id/btnScan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/scan_message"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/clear"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/tvRiskPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/risk_default"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <ProgressBar
+            android:id="@+id/progressRisk"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="0"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category_default"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="18dp" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/result_default"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/summary_default"
+            android:textSize="16sp"
+            android:paddingTop="12dp" />
+
+        <TextView
+            android:id="@+id/tvHistoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/history_title"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:id="@+id/tvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/history_default"
+            android:textSize="16sp"
+            android:padding="12dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">ShieldX Mobile</string>
+    <string name="app_title">ShieldX Mobile</string>
+    <string name="app_subtitle">SMS Scam Detection App</string>
+
+    <string name="language_title">Language</string>
+    <string name="select_language">Select Language</string>
+
+    <string name="privacy_title">Privacy &amp; Auto Protection</string>
+    <string name="privacy_info">ShieldX scans SMS on your device only. We do not upload your personal SMS to the cloud. Auto SMS Protection is optional and can be turned off anytime.</string>
+
+    <string name="enable_auto_sms">Enable Auto SMS Protection</string>
+    <string name="auto_protection_off">Auto Protection: OFF</string>
+    <string name="auto_protection_on">Auto Protection: ON</string>
+
+    <string name="sender_hint">Sender name or number</string>
+    <string name="message_hint">Paste SMS here...</string>
+    <string name="scan_message">Scan Message</string>
+    <string name="clear">Clear</string>
+
+    <string name="risk_default">Risk: 0%%</string>
+    <string name="category_default">Category: Not scanned</string>
+    <string name="result_default">Result will appear here</string>
+    <string name="summary_default">Summary will appear here</string>
+
+    <string name="history_title">Scan History</string>
+    <string name="history_default">No history yet</string>
+
+    <string name="enter_message_first">Please enter a message first.</string>
+    <string name="enter_details">Please enter sender and message details.</string>
+    <string name="unknown_sender">Unknown Sender</string>
+</resources>

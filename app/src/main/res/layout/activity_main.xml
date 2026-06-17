@@ -1,183 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#121212">
 
-    <LinearLayout
+    <!-- 🎯 1. CENTERED TITLE TOOLBAR (Aapka yeh code yahaan lagaya hai) -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:contentInsetStart="0dp"
+        app:contentInsetLeft="0dp"
+        app:navigationIcon="@android:drawable/ic_menu_sort_by_size">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_title"
-            android:textSize="28sp"
+            android:text="ShieldX Mobile"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp" />
+            android:layout_gravity="center" />
 
-        <TextView
-            android:id="@+id/tvSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_subtitle"
-            android:textSize="18sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp" />
+    </androidx.appcompat.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/tvLanguageTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/language_title"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="8dp" />
-
-        <Spinner
-            android:id="@+id/spinnerLanguage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:background="#F3F4F6"
-            android:layout_marginBottom="16dp">
+            android:padding="16dp">
 
             <TextView
-                android:id="@+id/tvPrivacyTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/privacy_title"
+                android:text="@string/language_title"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="16dp"/>
 
-            <TextView
-                android:id="@+id/tvPrivacyInfo"
+            <Spinner
+                android:id="@+id/spinnerLanguage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/privacy_info"
-                android:textSize="14sp"
-                android:layout_marginBottom="12dp" />
+                android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                android:background="@android:drawable/btn_dropdown" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchAutoProtection"
+                android:id="@+id/switchDarkMode"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/label_dark_mode"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/enable_auto_sms" />
+                android:orientation="vertical"
+                android:background="#1E1E1E"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchAutoProtection"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Enable Auto SMS Protection"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/tvProtectionStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Protection Active"
+                    android:textColor="#AAAAAA"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etSender"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="@string/sender_hint"
+                android:textColorHint="#555555"
+                android:textColor="#000000"
+                android:padding="12dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/etMessage"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="@string/message_hint"
+                android:textColorHint="#555555"
+                android:textColor="#000000"
+                android:padding="12dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/btnScan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/scan_message"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/btnClearAllHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_clear_all"
+                android:backgroundTint="#FF5252"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="24dp" />
 
             <TextView
-                android:id="@+id/tvProtectionStatus"
+                android:id="@+id/tvRiskPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Risk Percent: 0%"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <ProgressBar
+                android:id="@+id/progressRisk"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/auto_protection_off"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category: None"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Result: Waiting"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Analysis Summary will appear here."
+                android:textColor="#BBBBBB"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/history_title"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp" />
+                android:layout_marginBottom="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/etSender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/sender_hint"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp" />
-
-        <EditText
-            android:id="@+id/etMessage"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:hint="@string/message_hint"
-            android:gravity="top|start"
-            android:padding="12dp"
-            android:inputType="textMultiLine"
-            android:minLines="6"
-            android:maxLines="8" />
-
-        <Button
-            android:id="@+id/btnScan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/scan_message"
-            android:layout_marginTop="20dp" />
-
-        <Button
-            android:id="@+id/btnClear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/clear"
-            android:layout_marginTop="10dp" />
-
-        <TextView
-            android:id="@+id/tvRiskPercent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/risk_default"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp" />
-
-        <ProgressBar
-            android:id="@+id/progressRisk"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="0"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/tvCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/category_default"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginTop="18dp" />
-
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/result_default"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingTop="16dp" />
-
-        <TextView
-            android:id="@+id/tvSummary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/summary_default"
-            android:textSize="16sp"
-            android:paddingTop="12dp" />
-
-        <TextView
-            android:id="@+id/tvHistoryTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/history_title"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp" />
-
-        <TextView
-            android:id="@+id/tvHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/history_default"
-            android:textSize="16sp"
-            android:padding="12dp" />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

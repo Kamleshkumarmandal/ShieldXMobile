@@ -1,30 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ShieldX Mobile</string>
     <string name="app_title">ShieldX Mobile</string>
     <string name="app_subtitle">SMS Scam Detection App</string>
 
+    <string name="btn_msg_history">Scan History</string>
+    <string name="btn_clear_all">Clear All History</string>
+
     <string name="language_title">Language</string>
     <string name="select_language">Select Language</string>
+    <string name="label_dark_mode">Dark Mode Active</string>
 
     <string name="privacy_title">Privacy &amp; Auto Protection</string>
-    <string name="privacy_info">ShieldX scans SMS on your device only. We do not upload your personal SMS to the cloud. Auto SMS Protection is optional and can be turned off anytime.</string>
-
+    <string name="privacy_info">ShieldX scans SMS locally on your device. We do not upload your personal SMS data anywhere. Auto protection is optional and can be disabled anytime.</string>
     <string name="enable_auto_sms">Enable Auto SMS Protection</string>
     <string name="auto_protection_off">Auto Protection: OFF</string>
     <string name="auto_protection_on">Auto Protection: ON</string>
 
-    <string name="sender_hint">Sender name or number</string>
-    <string name="message_hint">Paste SMS here...</string>
+    <string name="sender_hint">Enter Sender Name/Number</string>
+    <string name="message_hint">Paste SMS content here...</string>
+
     <string name="scan_message">Scan Message</string>
     <string name="clear">Clear</string>
+    <string name="history_title">Scan History Log</string>
 
-    <string name="risk_default">Risk: 0%%</string>
-    <string name="category_default">Category: Not scanned</string>
+    <string name="risk_default">Risk: 0%</string>
+    <string name="category_default">Category: Unscanned</string>
     <string name="result_default">Result will appear here</string>
     <string name="summary_default">Summary will appear here</string>
-
-    <string name="history_title">Scan History</string>
-    <string name="history_default">No history yet</string>
+    <string name="history_default">No history available yet</string>
 
     <string name="enter_message_first">Please enter a message first.</string>
     <string name="enter_details">Please enter sender and message details.</string>

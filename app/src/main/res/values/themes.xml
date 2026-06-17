@@ -1,9 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.ShieldXMobile" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+<resources>
+    <style name="Theme.ShieldXMobile" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#6200EE</item>
+        <item name="colorPrimaryDark">#3700B3</item>
+        <item name="colorAccent">#03DAC6</item>
 
-    <style name="Theme.ShieldXMobile" parent="Base.Theme.ShieldXMobile" />
+        <item name="android:windowBackground">#1C1B1F</item>
+    </style>
 </resources>

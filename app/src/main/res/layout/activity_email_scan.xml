@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fake Email Scanner"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etEmailSender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sender email"
+            android:layout_marginTop="20dp"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/etEmailSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email subject"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/etEmailBody"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:hint="Paste email body here"
+            android:gravity="top"
+            android:layout_marginTop="12dp"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/btnScanEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Scan Email"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvEmailResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Result will appear here"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tvEmailRisk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Risk: 0%"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvEmailCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category: Not scanned"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvEmailSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Summary will appear here"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+</ScrollView>

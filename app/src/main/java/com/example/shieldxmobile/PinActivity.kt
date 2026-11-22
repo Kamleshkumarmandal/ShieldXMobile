@@ -232,6 +232,7 @@ class PinActivity : AppCompatActivity() {
     }
 
     private fun openMainApp() {
+        prefs.edit().putBoolean("session_unlocked", true).apply()
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

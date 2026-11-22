@@ -242,7 +242,7 @@ class MainActivity : AppCompatActivity() {
             recyclerHistory.scrollToPosition(0)
 
             if (prediction.riskScore >= 50) {
-                showScamAlertNotification(this@MainActivity, sender, prediction.riskScore)
+                showScamAlertNotification(this@MainActivity, prediction.riskScore)
             }
 
             saveHistory()
@@ -296,7 +296,7 @@ class MainActivity : AppCompatActivity() {
     } // Perfectly closes the onCreate function
 
     // 🔔 SCAM ALERT NOTIFICATION FUNCTION DEFINITION
-    private fun showScamAlertNotification(context: Context, sender: String, riskScore: Int) {
+    private fun showScamAlertNotification(context: Context, riskScore: Int) {
         if (
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
             ContextCompat.checkSelfPermission(
@@ -326,7 +326,7 @@ class MainActivity : AppCompatActivity() {
 
         val builder = androidx.core.app.NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.stat_notify_error)
-            .setContentTitle("⚠️ HIGH RISK SCAM DETECTED!")
+            .setContentTitle(if (riskScore >= 60) "ShieldX: high-risk pattern" else "ShieldX: suspicious pattern")
             .setContentText("A manually scanned message matched screening rules (score $riskScore/100).")
             .setPriority(androidx.core.app.NotificationCompat.PRIORITY_HIGH)
             .setDefaults(androidx.core.app.NotificationCompat.DEFAULT_ALL)

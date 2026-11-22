@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
             // Saare Menu Items list mein add ho rahe hain
             popupMenu.menu.add(0, 1, 0, "🔑 Change PIN")
-            popupMenu.menu.add(0, 2, 1, "🚨 Block Scam Number")
+            popupMenu.menu.add(0, 2, 1, "📇 Save Suspicious Sender")
             popupMenu.menu.add(0, 3, 2, "📋 Scam History Log")
             popupMenu.menu.add(0, 4, 3, "📢 Report New Scam")
             popupMenu.menu.add(0, 5, 4, "✉️ Help & Feedback") // 💡 NAYA HELP SECTION
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                         val etSender = findViewById<android.widget.EditText>(R.id.etSender)
                         val reportNum = etSender.text.toString().trim()
                         if (reportNum.isNotEmpty()) {
-                            android.widget.Toast.makeText(this, "Number $reportNum marked as Spam. Sending to Global Database!", android.widget.Toast.LENGTH_LONG).show()
+                            android.widget.Toast.makeText(this, "No global reporting service is connected. Use your carrier or the official cybercrime reporting channel to report this number.", android.widget.Toast.LENGTH_LONG).show()
                         } else {
                             android.widget.Toast.makeText(this, "Enter a number in Sender box to report!", android.widget.Toast.LENGTH_SHORT).show()
                         }
@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
                         // ℹ️ 6. ABOUT APP
                         androidx.appcompat.app.AlertDialog.Builder(this)
                             .setTitle("About ShieldX Mobile")
-                            .setMessage("Developer: Kamlesh Kumar Mandal\nVersion: v1.0.2\n\n© 2026 ShieldX Mobile. All Rights Reserved.\nProprietary software. Unauthorized copying or distribution of this source code is strictly prohibited.")
+                            .setMessage("Developer: Kamlesh Kumar Mandal\nVersion: v1.1\n\n© 2026 ShieldX Mobile. All Rights Reserved.\nProprietary software. Unauthorized copying or distribution of this source code is strictly prohibited.")
                             .setPositiveButton("Close", null)
                             .show()
                         true

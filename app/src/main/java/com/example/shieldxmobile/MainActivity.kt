@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Toast.makeText(this, "MainActivity Started", Toast.LENGTH_LONG).show()
         setContentView(R.layout.activity_main)
 
         // 🎯 Prefs and Toolbar Setup
@@ -93,7 +92,9 @@ class MainActivity : AppCompatActivity() {
                                 object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
                                     override fun onAuthenticationSucceeded(result: androidx.biometric.BiometricPrompt.AuthenticationResult) {
                                         super.onAuthenticationSucceeded(result)
-                                        val intent = android.content.Intent(this@MainActivity, PinActivity::class.java)
+                                        val intent = android.content.Intent(this@MainActivity, PinActivity::class.java).apply {
+                                            putExtra(PinActivity.EXTRA_ALLOW_PIN_RESET, true)
+                                        }
                                         startActivity(intent)
                                     }
                                     override fun onAuthenticationFailed() {
@@ -215,21 +216,31 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val detector = AiScamDetector()
-            val prediction = detector.predict(message)
+            val prediction = ScamMessageHeuristic().analyze(message)
+            val label = when {
+                prediction.riskScore >= 60 -> "High Risk Scam Pattern"
+                prediction.riskScore >= 30 -> "Suspicious Message Pattern"
+                else -> "No Strong Scam Pattern Detected"
+            }
+            val details = if (prediction.matchedSignals.isEmpty()) {
+                "No high-risk keyword patterns matched. This does not guarantee the message is safe."
+            } else {
+                prediction.matchedSignals.joinToString(separator = " · ")
+            }
 
-            tvRiskPercent.text = "Risk: ${prediction.aiRisk}%"
-            progressRisk.progress = prediction.aiRisk
-            tvResult.text = prediction.aiLabel
-            tvCategory.text = "Category: SMS Scam"
-            tvSummary.text = "Confidence Level: ${prediction.confidence}%"
+            tvRiskPercent.text = "Heuristic risk: ${prediction.riskScore}%"
+            progressRisk.progress = prediction.riskScore
+            tvResult.text = label
+            tvCategory.text = "Category: Rule-based SMS screening"
+            tvSummary.text = details
 
-            historyList.add(0, HistoryItem(sender, message, prediction.aiLabel, "SMS Scam", prediction.aiRisk))
+            historyList.add(0, HistoryItem(sender, message, label, "Rule-based SMS screening", prediction.riskScore))
+            if (historyList.size > 100) historyList.removeAt(historyList.lastIndex)
             historyAdapter.notifyItemInserted(0)
             recyclerHistory.scrollToPosition(0)
 
-            if (prediction.aiRisk >= 50) {
-                showScamAlertNotification(this@MainActivity, sender, prediction.aiRisk)
+            if (prediction.riskScore >= 50) {
+                showScamAlertNotification(this@MainActivity, sender, prediction.riskScore)
             }
 
             saveHistory()
@@ -266,53 +277,22 @@ class MainActivity : AppCompatActivity() {
                     }
                 } catch (e: Exception) {}
 
-                val backgroundPrefs = context.getSharedPreferences("shieldx_prefs", Context.MODE_PRIVATE)
-                val localGson = Gson()
-                val json = backgroundPrefs.getString("history", null)
-                val type = object : TypeToken<MutableList<HistoryItem>>() {}.type
-
-                val currentList = mutableListOf<HistoryItem>()
-                if (json != null) {
-                    val savedList: MutableList<HistoryItem> = localGson.fromJson(json, type)
-                    currentList.addAll(savedList)
-                }
-
-                val newItem = HistoryItem(sender, message, label, category, riskScore)
-                if (currentList.isEmpty() || currentList[0].message != message) {
-                    currentList.add(0, newItem)
-                }
-
-                backgroundPrefs.edit().putString("history", localGson.toJson(currentList)).apply()
-
-                try {
-                    if (::historyAdapter.isInitialized) {
-                        historyList.clear()
-                        historyList.addAll(currentList)
-                        historyAdapter.notifyDataSetChanged()
-                        recyclerHistory.scrollToPosition(0)
+                if (::historyAdapter.isInitialized) {
+                    loadHistory()
+                    if (riskScore >= 50) {
+                        showScamAlertNotification(context, sender, riskScore)
                     }
-                } catch (e: Exception) {}
-
-                if (riskScore >= 50) {
-                    showScamAlertNotification(context, sender, riskScore)
                 }
             }
         }
 
-        // 📡 4. LIVE BACKGROUND SCANNER REGISTRATION (Moved inside onCreate)
-        @android.annotation.SuppressLint("UnspecifiedRegisterReceiverFlag")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(
-                smsReceiverBridge,
-                IntentFilter("com.example.shieldxmobile.SMS_UPDATED"),
-                Context.RECEIVER_EXPORTED
-            )
-        } else {
-            registerReceiver(
-                smsReceiverBridge,
-                IntentFilter("com.example.shieldxmobile.SMS_UPDATED")
-            )
-        }
+        // Only this app should receive its internal SMS scan updates.
+        ContextCompat.registerReceiver(
+            this,
+            smsReceiverBridge,
+            IntentFilter("com.example.shieldxmobile.SMS_UPDATED"),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
     } // Perfectly closes the onCreate function
 
     // 🔔 SCAM ALERT NOTIFICATION FUNCTION DEFINITION
@@ -419,9 +399,6 @@ class MainActivity : AppCompatActivity() {
                 if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
                     permissions.add(android.Manifest.permission.RECEIVE_SMS)
                 }
-                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-                    permissions.add(android.Manifest.permission.READ_SMS)
-                }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                         permissions.add(android.Manifest.permission.POST_NOTIFICATIONS)
@@ -440,11 +417,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadHistory() {
-        val json = prefs.getString("history", null) ?: return
+        val json = prefs.getString("history", null)
+            ?: prefs.getString("scan_history", null)
         val type = object : TypeToken<MutableList<HistoryItem>>() {}.type
-        val savedList: MutableList<HistoryItem> = gson.fromJson(json, type)
+        val savedList = try {
+            if (json.isNullOrBlank()) mutableListOf()
+            else gson.fromJson<MutableList<HistoryItem>>(json, type) ?: mutableListOf()
+        } catch (_: Exception) {
+            mutableListOf()
+        }
+
         historyList.clear()
-        historyList.addAll(savedList)
+        historyList.addAll(savedList.take(100))
+        if (!json.isNullOrBlank() && !prefs.contains("history")) {
+            prefs.edit().putString("history", gson.toJson(historyList)).remove("scan_history").apply()
+        }
         if (::historyAdapter.isInitialized) {
             historyAdapter.notifyDataSetChanged()
         }

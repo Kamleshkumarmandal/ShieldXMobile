@@ -261,7 +261,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 📡 3. LIVE BACKGROUND SCANNER (Moved inside onCreate)
-        smsReceiverBridge = object : BroadcastReceiver() {
+        val smsUpdateReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 val sender = intent.getStringExtra("sender") ?: "Unknown"
                 val message = intent.getStringExtra("message") ?: ""
@@ -285,11 +285,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        smsReceiverBridge = smsUpdateReceiver
         // Only this app should receive its internal SMS scan updates.
         ContextCompat.registerReceiver(
             this,
-            smsReceiverBridge,
-            IntentFilter("com.example.shieldxmobile.SMS_UPDATED"),
+            smsUpdateReceiver,
+            IntentFilter(SmsReceiver.ACTION_SMS_UPDATED),
             ContextCompat.RECEIVER_NOT_EXPORTED
         )
     } // Perfectly closes the onCreate function
@@ -448,8 +449,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (smsReceiverBridge != null) {
-            unregisterReceiver(smsReceiverBridge)
+        smsReceiverBridge?.let { registeredReceiver ->
+            unregisterReceiver(registeredReceiver)
+            smsReceiverBridge = null
         }
     }
 

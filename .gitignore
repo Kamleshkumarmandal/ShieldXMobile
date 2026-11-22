@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Kotlin/Gradle local build state
+.kotlin/
+.gradle/

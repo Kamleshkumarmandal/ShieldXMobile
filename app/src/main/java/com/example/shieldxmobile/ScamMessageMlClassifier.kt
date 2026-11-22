@@ -115,7 +115,7 @@ object ScamMessageMlClassifier {
     private fun predict(model: Model, message: String): Prediction {
         val normalized = Normalizer.normalize(
             message.lowercase(Locale.ROOT),
-            Normalizer.Form.NFD
+            Normalizer.Form.NFKD
         ).filterNot { character ->
             val type = Character.getType(character)
             type == Character.NON_SPACING_MARK.toInt() ||

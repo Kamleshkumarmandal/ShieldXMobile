@@ -144,7 +144,7 @@ class SmsReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val title = if (result.contains("High Risk")) {
+        val title = if (riskScore >= 60 || result.contains("High Risk")) {
             "ShieldX: high-risk SMS pattern"
         } else {
             "ShieldX: suspicious SMS pattern"

@@ -33,7 +33,7 @@ class ScamMessageHeuristicTest {
 
     @Test
     fun linkWithoutOtherSignalsIsNotCalledSafe() {
-        val result = detector.analyze("Visit https://example.com for details.")
+        val result = detector.analyze("Visit https://example.xyz for details.")
         assertTrue(result.riskScore > 0)
         assertTrue(result.label != "No strong scam pattern detected")
     }

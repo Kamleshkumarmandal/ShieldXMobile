@@ -296,6 +296,16 @@ class MainActivity : AppCompatActivity() {
 
     // 🔔 SCAM ALERT NOTIFICATION FUNCTION DEFINITION
     private fun showScamAlertNotification(context: Context, sender: String, riskScore: Int) {
+        if (
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
         val channelId = "scam_alerts"
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
@@ -316,7 +326,7 @@ class MainActivity : AppCompatActivity() {
         val builder = androidx.core.app.NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.stat_notify_error)
             .setContentTitle("⚠️ HIGH RISK SCAM DETECTED!")
-            .setContentText("Suspicious SMS from: $sender (Risk: $riskScore%)")
+            .setContentText("A manually scanned message matched screening rules (score $riskScore/100).")
             .setPriority(androidx.core.app.NotificationCompat.PRIORITY_HIGH)
             .setDefaults(androidx.core.app.NotificationCompat.DEFAULT_ALL)
             .setAutoCancel(true)

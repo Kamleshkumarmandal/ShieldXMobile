@@ -462,6 +462,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (!prefs.getBoolean("session_unlocked", false)) {
+            startActivity(Intent(this, PinActivity::class.java))
+            finish()
+            return
+        }
         loadHistory()
+    }
+
+    override fun onStop() {
+        if (!isChangingConfigurations) {
+            prefs.edit().putBoolean("session_unlocked", false).apply()
+        }
+        super.onStop()
     }
 } // 👈 Ye last bracket pure MainActivity class ko close karta hai, iske niche kuch nahi hona chahiye!

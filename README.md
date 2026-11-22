@@ -1,16 +1,19 @@
 # ShieldXMobile — Android SMS Scam Pattern Protection
 
-ShieldXMobile is a Kotlin Android application that lets a user manually screen SMS text and, when the user enables Auto Protection and grants the SMS permission, inspect incoming SMS messages for suspicious wording and links.
+ShieldXMobile is a Kotlin Android application that screens SMS messages with an offline trained text-classification model plus a transparent rule-based fallback. It supports manual scans and, when the user enables Auto Protection and grants the SMS permission, incoming SMS screening.
 
-> **Important:** The current detector is a transparent keyword/rule-based heuristic, not a trained AI model. Its 0–100 score is a screening signal, not a probability or guarantee. Messages marked low risk can still be fraudulent, and legitimate messages can be flagged.
+> **Important:** ShieldX uses an on-device TF-IDF + Logistic Regression model (ham, spam, smishing) and supplementary keyword rules. Model scores are screening signals, not calibrated real-world probabilities or guarantees. Messages marked low risk can still be fraudulent, and legitimate messages can be flagged.
 
 ## Features
 
 - Local 4-digit app PIN gate.
 - Salted PIN hashing and persisted failed-attempt lockout.
 - Biometric/device-credential authorization for PIN reset.
-- Manual SMS text screening.
+- Manual SMS text screening with the trained on-device model.
 - Optional incoming SMS screening after the user enables Auto Protection and grants permission.
+- Three-class offline classification: legitimate (ham), spam and smishing.
+- Rule-based heuristic fallback if the trained model asset is missing or cannot load.
+- SMS text is classified locally; no message content is sent to a remote model API.
 - Multipart SMS handling.
 - Local scan history with a bounded 100-item history list.
 - High-risk notifications that do not display the message body or OTP.
@@ -33,13 +36,15 @@ ShieldXMobile is a Kotlin Android application that lets a user manually screen S
 
 ## Scam screening behavior
 
-The current rules look for combinations of:
+The primary detector is a compact TF-IDF + multinomial Logistic Regression model trained to distinguish ham, spam and smishing SMS. It runs on-device and uses a packaged JSON model (vocabulary, IDF weights and classifier coefficients). The app also runs the transparent heuristic rules as supplementary signals and uses them as a fallback if the model asset cannot be loaded.
+
+The supplementary rules look for combinations of:
 - requests to share an OTP, PIN, password or security code;
 - urgent account, KYC or verification actions;
 - prize/reward/lottery claims;
 - URL links, shortened links and selected higher-risk URL suffixes.
 
-The app displays matched rule categories to make the score more transparent. It does not fetch URLs, visit suspicious links, contact a reporting database, block numbers at the carrier/network level, or use a trained ML model. Menu items for reporting or blocking are not connected to a global database or network-level blocking service.
+The app displays the model's predicted class and score together with matched rule categories. Model scores are not calibrated probabilities. The app does not fetch URLs, visit suspicious links, contact a reporting database, or block numbers at the carrier/network level. Menu items for reporting or blocking are not connected to a global database or network-level blocking service.
 
 ## Build locally
 
@@ -81,17 +86,20 @@ SMS permissions are restricted by Google Play policy. Before publishing through 
 
 GitHub Actions runs:
 - Kotlin/Android unit tests;
-- Android debug APK assembly.
+- Android debug APK assembly;
+- SMS model training, holdout evaluation and JSON model export (GitHub Actions workflow `Train SMS model`).
 
-Unit tests cover PIN hash behavior and the rule-based scam screening logic. They do not prove the heuristic can identify every scam or that a specific SMS is safe.
+The current training run cleaned 5,971 source rows to 5,797 unique, non-conflicting messages. On a stratified 20% holdout (1,160 messages), the model achieved 96.9% accuracy and 90.2% macro-F1. Class F1 was 98.9% for ham, 90.9% for smishing and 80.7% for spam. These are results on this dataset's holdout split, not independent real-world validation. The evaluation report is in `ml/generated/evaluation.json`.
 
 ## Privacy notes
 
-Scan history and PIN-verification material are stored locally in app-private preferences. Backup is disabled. SMS text is processed on-device by the current rule-based detector; the current implementation does not send message contents to a remote API.
+Scan history and PIN-verification material are stored locally in app-private preferences. Backup is disabled. SMS text is processed on-device by the packaged ML model and heuristic rules; message contents are not sent to a remote API. The raw training dataset is downloaded only during the training workflow and is not committed to this app repository.
 
 ## Limitations
 
-- Keyword heuristics can miss new scam patterns and can produce false positives.
+- The training corpus is primarily English; Hindi, Tamil and other language predictions may be less reliable even though the app UI supports those languages.
+- Dataset holdout metrics may not reflect current or region-specific scam campaigns.
+- Model and keyword heuristics can miss new scam patterns and can produce false positives.
 - Sender reputation and link-domain reputation are not checked online.
 - No carrier-level spam blocking or global reporting service is connected.
 - SMS receiver behavior depends on Android permission state, device/OS behavior and distribution policy.

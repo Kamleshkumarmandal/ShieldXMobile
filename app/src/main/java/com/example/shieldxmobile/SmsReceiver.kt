@@ -43,30 +43,39 @@ class SmsReceiver : BroadcastReceiver() {
             val body = messages.joinToString(separator = "") { it.messageBody.orEmpty() }
             if (body.isBlank()) return
 
-            val prediction = ScamMessageHeuristic().analyze(body)
-            val label = when {
-                prediction.riskScore >= 60 -> "High Risk Scam Pattern"
-                prediction.riskScore >= 30 -> "Suspicious Message Pattern"
+            val heuristic = ScamMessageHeuristic().analyze(body)
+            val mlPrediction = ScamMessageMlClassifier.analyze(context, body)
+            val riskScore = mlPrediction?.riskScore ?: heuristic.riskScore
+            val label = mlPrediction?.label ?: when {
+                heuristic.riskScore >= 60 -> "High Risk Scam Pattern"
+                heuristic.riskScore >= 30 -> "Suspicious Message Pattern"
                 else -> "No Strong Scam Pattern Detected"
             }
-            val category = prediction.matchedSignals.joinToString(" · ")
+            val sourceCategory = if (mlPrediction != null) {
+                "On-device ML + heuristic screening"
+            } else {
+                "Rule-based SMS screening (ML model unavailable)"
+            }
+            val ruleSignals = heuristic.matchedSignals.joinToString(" · ")
                 .ifBlank { "No high-risk keyword patterns matched" }
+            val category = listOfNotNull(mlPrediction?.summary, "Rule signals: $ruleSignals")
+                .joinToString(" | ")
 
-            saveHistory(context, HistoryItem(sender, body, label, "Rule-based SMS screening", prediction.riskScore))
+            saveHistory(context, HistoryItem(sender, body, label, sourceCategory, riskScore))
 
             // Package-scoped broadcast plus a NOT_EXPORTED dynamic receiver in MainActivity.
             val updateIntent = Intent(ACTION_SMS_UPDATED).apply {
                 setPackage(context.packageName)
                 putExtra("sender", sender)
                 putExtra("message", body)
-                putExtra("riskScore", prediction.riskScore)
+                putExtra("riskScore", riskScore)
                 putExtra("category", category)
                 putExtra("label", label)
             }
             context.sendBroadcast(updateIntent)
 
-            if (prediction.riskScore >= 50) {
-                showNotification(context, label, sender, prediction.riskScore)
+            if (riskScore >= 50) {
+                showNotification(context, label, sender, riskScore)
             }
         } catch (exception: Exception) {
             Log.e("ShieldXMobile", "Could not process incoming SMS", exception)

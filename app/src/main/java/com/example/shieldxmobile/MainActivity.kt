@@ -92,8 +92,10 @@ class MainActivity : AppCompatActivity() {
                                 object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
                                     override fun onAuthenticationSucceeded(result: androidx.biometric.BiometricPrompt.AuthenticationResult) {
                                         super.onAuthenticationSucceeded(result)
+                                        val resetToken = java.util.UUID.randomUUID().toString()
+                                        prefs.edit().putString("pin_reset_token", resetToken).apply()
                                         val intent = android.content.Intent(this@MainActivity, PinActivity::class.java).apply {
-                                            putExtra(PinActivity.EXTRA_ALLOW_PIN_RESET, true)
+                                            putExtra(PinActivity.EXTRA_ALLOW_PIN_RESET, resetToken)
                                         }
                                         startActivity(intent)
                                     }
@@ -264,8 +266,8 @@ class MainActivity : AppCompatActivity() {
                 val sender = intent.getStringExtra("sender") ?: "Unknown"
                 val message = intent.getStringExtra("message") ?: ""
                 val riskScore = intent.getIntExtra("riskScore", 0)
-                val category = intent.getStringExtra("category") ?: "SMS Scam"
-                val label = intent.getStringExtra("label") ?: "Safe"
+                val category = intent.getStringExtra("category") ?: "Rule-based SMS screening"
+                val label = intent.getStringExtra("label") ?: "No Strong Scam Pattern Detected"
 
                 try {
                     if (::tvRiskPercent.isInitialized && tvRiskPercent != null) {
@@ -273,15 +275,12 @@ class MainActivity : AppCompatActivity() {
                         progressRisk.progress = riskScore
                         tvResult.text = label
                         tvCategory.text = "Category: $category"
-                        tvSummary.text = "Live Scanned Background Monitor"
+                        tvSummary.text = "Screening signals: $category"
                     }
                 } catch (e: Exception) {}
 
                 if (::historyAdapter.isInitialized) {
                     loadHistory()
-                    if (riskScore >= 50) {
-                        showScamAlertNotification(context, sender, riskScore)
-                    }
                 }
             }
         }

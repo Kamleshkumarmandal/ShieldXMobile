@@ -1,0 +1,91 @@
+{
+  "source": {
+    "title": "SMS PHISHING DATASET FOR MACHINE LEARNING AND PATTERN RECOGNITION",
+    "authors": [
+      "Sandhya Mishra",
+      "Devpriya Soni"
+    ],
+    "doi": "10.17632/f45bkkt8pr.1",
+    "license": "CC BY 4.0",
+    "source_rows": 5971,
+    "usable_rows_before_deduplication": 5971,
+    "conflicting_rows_removed": 68,
+    "duplicate_rows_removed": 106,
+    "training_rows_after_cleaning": 5797,
+    "class_counts_after_cleaning": {
+      "ham": 4834,
+      "smishing": 528,
+      "spam": 435
+    }
+  },
+  "holdout_evaluation": {
+    "accuracy": 0.9689655172413794,
+    "macro_f1": 0.9018409698621549,
+    "weighted_f1": 0.9682344267756086,
+    "class_report": {
+      "ham": {
+        "precision": 0.983640081799591,
+        "recall": 0.9948293691830403,
+        "f1-score": 0.9892030848329049,
+        "support": 967.0
+      },
+      "smishing": {
+        "precision": 0.9223300970873787,
+        "recall": 0.8962264150943396,
+        "f1-score": 0.9090909090909091,
+        "support": 106.0
+      },
+      "spam": {
+        "precision": 0.8481012658227848,
+        "recall": 0.7701149425287356,
+        "f1-score": 0.8072289156626506,
+        "support": 87.0
+      },
+      "accuracy": 0.9689655172413794,
+      "macro avg": {
+        "precision": 0.9180238149032515,
+        "recall": 0.8870569089353718,
+        "f1-score": 0.9018409698621549,
+        "support": 1160.0
+      },
+      "weighted avg": {
+        "precision": 0.9678722064810766,
+        "recall": 0.9689655172413794,
+        "f1-score": 0.9682344267756086,
+        "support": 1160.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        962,
+        2,
+        3
+      ],
+      [
+        2,
+        95,
+        9
+      ],
+      [
+        14,
+        6,
+        67
+      ]
+    ],
+    "class_order": [
+      "ham",
+      "smishing",
+      "spam"
+    ],
+    "test_rows": 1160
+  },
+  "deployed_model": {
+    "type": "TF-IDF + Logistic Regression",
+    "feature_count": 6000,
+    "classes": [
+      "ham",
+      "smishing",
+      "spam"
+    ]
+  }
+}

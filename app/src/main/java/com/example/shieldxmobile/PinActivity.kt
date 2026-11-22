@@ -25,6 +25,7 @@ class PinActivity : AppCompatActivity() {
         private const val PIN_SALT_KEY = "admin_pin_salt"
         private const val FAILED_ATTEMPTS_KEY = "pin_failed_attempts"
         private const val MAX_FAILED_ATTEMPTS = 3
+        const val EXTRA_ALLOW_PIN_RESET = "com.example.shieldxmobile.ALLOW_PIN_RESET"
     }
 
     private lateinit var etPin: EditText
@@ -52,6 +53,16 @@ class PinActivity : AppCompatActivity() {
 
         prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         executor = ContextCompat.getMainExecutor(this)
+
+        // MainActivity sets this only after successful device/biometric authentication.
+        if (intent.getBooleanExtra(EXTRA_ALLOW_PIN_RESET, false)) {
+            prefs.edit()
+                .remove(PIN_HASH_KEY)
+                .remove(PIN_SALT_KEY)
+                .remove(LEGACY_PIN_KEY)
+                .remove(FAILED_ATTEMPTS_KEY)
+                .apply()
+        }
 
         updatePinScreen()
 

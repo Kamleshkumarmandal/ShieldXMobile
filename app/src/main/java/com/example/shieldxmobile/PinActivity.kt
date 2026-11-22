@@ -24,6 +24,7 @@ class PinActivity : AppCompatActivity() {
         private const val PIN_HASH_KEY = "admin_pin_hash"
         private const val PIN_SALT_KEY = "admin_pin_salt"
         private const val FAILED_ATTEMPTS_KEY = "pin_failed_attempts"
+        private const val RESET_TOKEN_KEY = "pin_reset_token"
         private const val MAX_FAILED_ATTEMPTS = 3
         const val EXTRA_ALLOW_PIN_RESET = "com.example.shieldxmobile.ALLOW_PIN_RESET"
     }
@@ -54,9 +55,20 @@ class PinActivity : AppCompatActivity() {
         prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         executor = ContextCompat.getMainExecutor(this)
 
-        // MainActivity sets this only after successful device/biometric authentication.
-        if (intent.getBooleanExtra(EXTRA_ALLOW_PIN_RESET, false)) {
+        // Require a one-time token stored in private app preferences. This activity is
+        // the launcher, so an arbitrary external intent extra must never authorize reset.
+        val suppliedToken = intent.getStringExtra(EXTRA_ALLOW_PIN_RESET)
+        val storedToken = prefs.getString(RESET_TOKEN_KEY, null)
+        if (
+            !suppliedToken.isNullOrBlank() &&
+            !storedToken.isNullOrBlank() &&
+            java.security.MessageDigest.isEqual(
+                suppliedToken.toByteArray(Charsets.UTF_8),
+                storedToken.toByteArray(Charsets.UTF_8)
+            )
+        ) {
             prefs.edit()
+                .remove(RESET_TOKEN_KEY)
                 .remove(PIN_HASH_KEY)
                 .remove(PIN_SALT_KEY)
                 .remove(LEGACY_PIN_KEY)

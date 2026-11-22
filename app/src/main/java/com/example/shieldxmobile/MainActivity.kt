@@ -343,7 +343,7 @@ class MainActivity : AppCompatActivity() {
         val builder = androidx.core.app.NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.stat_notify_error)
             .setContentTitle(if (riskScore >= 60) "ShieldX: high-risk pattern" else "ShieldX: suspicious pattern")
-            .setContentText("A manually scanned message matched screening rules (score $riskScore/100).")
+            .setContentText("A manually scanned message matched local screening (risk score $riskScore/100).")
             .setPriority(androidx.core.app.NotificationCompat.PRIORITY_HIGH)
             .setDefaults(androidx.core.app.NotificationCompat.DEFAULT_ALL)
             .setAutoCancel(true)

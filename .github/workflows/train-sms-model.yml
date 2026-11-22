@@ -1,0 +1,48 @@
+name: Train SMS model
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ml/train_sms_model.py"
+      - "ml/requirements.txt"
+      - ".github/workflows/train-sms-model.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: train-sms-model-main
+  cancel-in-progress: false
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: ml/requirements.txt
+
+      - name: Install training dependencies
+        run: python -m pip install -r ml/requirements.txt
+
+      - name: Train and evaluate classifier
+        run: python ml/train_sms_model.py
+
+      - name: Commit generated on-device model and evaluation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/src/main/assets/sms_model.json ml/generated/evaluation.json
+          git commit -m "Add trained on-device SMS classifier" || echo "No generated model changes"
+          git push

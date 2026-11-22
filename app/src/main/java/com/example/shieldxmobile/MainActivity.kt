@@ -218,31 +218,47 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val prediction = ScamMessageHeuristic().analyze(message)
-            val label = when {
-                prediction.riskScore >= 60 -> "High Risk Scam Pattern"
-                prediction.riskScore >= 30 -> "Suspicious Message Pattern"
+            val heuristic = ScamMessageHeuristic().analyze(message)
+            val mlPrediction = ScamMessageMlClassifier.analyze(this@MainActivity, message)
+            val riskScore = mlPrediction?.riskScore ?: heuristic.riskScore
+            val label = mlPrediction?.label ?: when {
+                heuristic.riskScore >= 60 -> "High Risk Scam Pattern"
+                heuristic.riskScore >= 30 -> "Suspicious Message Pattern"
                 else -> "No Strong Scam Pattern Detected"
             }
-            val details = if (prediction.matchedSignals.isEmpty()) {
-                "No high-risk keyword patterns matched. This does not guarantee the message is safe."
+            val sourceCategory = if (mlPrediction != null) {
+                "On-device ML + heuristic screening"
             } else {
-                prediction.matchedSignals.joinToString(separator = " · ")
+                "Rule-based SMS screening (ML model unavailable)"
             }
+            val heuristicDetails = if (heuristic.matchedSignals.isEmpty()) {
+                "No high-risk keyword patterns matched."
+            } else {
+                "Rule signals: " + heuristic.matchedSignals.joinToString(separator = " · ")
+            }
+            val details = listOfNotNull(
+                mlPrediction?.summary,
+                heuristicDetails,
+                "Screening results are not a guarantee that a message is safe or fraudulent."
+            ).joinToString("\n")
 
-            tvRiskPercent.text = "Heuristic risk: ${prediction.riskScore}%"
-            progressRisk.progress = prediction.riskScore
+            tvRiskPercent.text = if (mlPrediction != null) {
+                "ML risk score: $riskScore/100"
+            } else {
+                "Heuristic risk: $riskScore/100"
+            }
+            progressRisk.progress = riskScore
             tvResult.text = label
-            tvCategory.text = "Category: Rule-based SMS screening"
+            tvCategory.text = "Category: $sourceCategory"
             tvSummary.text = details
 
-            historyList.add(0, HistoryItem(sender, message, label, "Rule-based SMS screening", prediction.riskScore))
+            historyList.add(0, HistoryItem(sender, message, label, sourceCategory, riskScore))
             if (historyList.size > 100) historyList.removeAt(historyList.lastIndex)
             historyAdapter.notifyItemInserted(0)
             recyclerHistory.scrollToPosition(0)
 
-            if (prediction.riskScore >= 50) {
-                showScamAlertNotification(this@MainActivity, prediction.riskScore)
+            if (riskScore >= 50) {
+                showScamAlertNotification(this@MainActivity, riskScore)
             }
 
             saveHistory()

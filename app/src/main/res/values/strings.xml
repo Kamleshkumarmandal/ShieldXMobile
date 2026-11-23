@@ -40,4 +40,16 @@
     <string name="category_default">Category: None</string>
     <string name="result_default">Result: Waiting</string>
     <string name="summary_default">Analysis Summary will appear here.</string>
+
+    <string name="language_english">English</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_tamil">Tamil</string>
+    <string name="dark_mode_label">Dark Mode</string>
+    <string name="history_title">Scan History Log</string>
+    <string name="risk_default">Risk Percent: 0%%</string>
+    <string name="category_default">Category: None</string>
+    <string name="result_default">Result: Waiting</string>
+    <string name="summary_default">Analysis Summary will appear here.</string>
+    <string name="scan_message">Scan Message</string>
+    <string name="clear_all_history">Clear All History</string>
 </resources>

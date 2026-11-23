@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShieldX Mobile</string>
+    <string name="app_title">ShieldX Mobile</string>
+    <string name="app_subtitle">SMS மோசடி கண்டறிதல் செயலி</string>
+    <string name="btn_msg_history">ஸ்கேன் வரலாறு</string>
+    <string name="btn_clear_all">அனைத்து வரலாற்றையும் அழி</string>
+    <string name="language_title">மொழி</string>
+    <string name="select_language">மொழியைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="label_dark_mode">இருண்ட பயன்முறை</string>
+    <string name="privacy_title">தனியுரிமை மற்றும் தானியங்கி பாதுகாப்பு</string>
+    <string name="privacy_info">ShieldX உங்கள் சாதனத்திலேயே SMS செய்திகளை ஆய்வு செய்கிறது. உங்கள் தனிப்பட்ட SMS தரவு எங்கும் பதிவேற்றப்படாது.</string>
+    <string name="enable_auto_sms">தானியங்கி SMS பாதுகாப்பை இயக்கு</string>
+    <string name="auto_protection_off">தானியங்கி பாதுகாப்பு: முடக்கம்</string>
+    <string name="auto_protection_on">தானியங்கி பாதுகாப்பு: இயக்கம்</string>
+    <string name="sender_hint">அனுப்புநர் பெயர் / எண்ணை உள்ளிடவும்</string>
+    <string name="message_hint">SMS செய்தியை இங்கே ஒட்டவும்...</string>
+    <string name="scan_message">செய்தியை ஸ்கேன் செய்</string>
+    <string name="clear">அழி</string>
+    <string name="history_title">ஸ்கேன் வரலாறு</string>
+    <string name="risk_default">ஆபத்து சதவீதம்: 0%</string>
+    <string name="category_default">வகை: இல்லை</string>
+    <string name="result_default">முடிவு: காத்திருக்கிறது</string>
+    <string name="summary_default">பகுப்பாய்வு சுருக்கம் இங்கே தோன்றும்.</string>
+    <string name="history_default">இதுவரை வரலாறு இல்லை</string>
+    <string name="enter_message_first">முதலில் செய்தியை உள்ளிடவும்.</string>
+    <string name="enter_details">அனுப்புநர் மற்றும் செய்தி விவரங்களை உள்ளிடவும்.</string>
+    <string name="unknown_sender">அறியப்படாத அனுப்புநர்</string>
+    <string name="language_english">ஆங்கிலம்</string>
+    <string name="language_hindi">இந்தி</string>
+    <string name="language_tamil">தமிழ்</string>
+    <string name="risk_percent_value">ஆபத்து சதவீதம்: %1$d%%</string>
+    <string name="risk_ml">ML ஆபத்து மதிப்பெண்: %1$d/100</string>
+    <string name="risk_heuristic">விதி அடிப்படையிலான ஆபத்து: %1$d/100</string>
+    <string name="category_prefix">வகை: %1$s</string>
+    <string name="no_high_risk_patterns">அதிக ஆபத்துள்ள முக்கிய சொற்கள் எதுவும் பொருந்தவில்லை.</string>
+    <string name="rule_signals">விதி அறிகுறிகள்: %1$s</string>
+    <string name="screening_disclaimer">இந்த ஆய்வு முடிவு செய்தி பாதுகாப்பானது அல்லது மோசடியானது என்பதை உறுதி செய்யாது.</string>
+    <string name="screening_signals">ஆய்வு அறிகுறிகள்: %1$s</string>
+</resources>

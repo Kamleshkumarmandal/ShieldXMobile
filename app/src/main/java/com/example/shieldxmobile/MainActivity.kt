@@ -21,6 +21,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -56,8 +57,20 @@ class MainActivity : AppCompatActivity() {
     private var smsReceiverBridge: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        // Apply saved appearance and language before inflating any views.
+        val startupPrefs = getSharedPreferences("shieldx_prefs", MODE_PRIVATE)
+        AppCompatDelegate.setDefaultNightMode(
+            if (startupPrefs.getBoolean("dark_mode", false)) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
+        val savedLanguage = startupPrefs.getString("selected_lang", "en") ?: "en"
+        val activeLanguage = AppCompatDelegate.getApplicationLocales().toLanguageTags()
+            .substringBefore("-").ifBlank { "en" }
+        if (activeLanguage != savedLanguage) {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(savedLanguage))
+        }
 
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // 🎯 Prefs and Toolbar Setup
@@ -232,24 +245,23 @@ class MainActivity : AppCompatActivity() {
                 "Rule-based SMS screening (ML model unavailable)"
             }
             val heuristicDetails = if (heuristic.matchedSignals.isEmpty()) {
-                "No high-risk keyword patterns matched."
+                getString(R.string.no_high_risk_patterns)
             } else {
-                "Rule signals: " + heuristic.matchedSignals.joinToString(separator = " · ")
+                getString(R.string.rule_signals, heuristic.matchedSignals.joinToString(separator = " · "))
             }
             val details = listOfNotNull(
                 mlPrediction?.summary,
                 heuristicDetails,
-                "Screening results are not a guarantee that a message is safe or fraudulent."
+                getString(R.string.screening_disclaimer)
             ).joinToString("\n")
 
-            tvRiskPercent.text = if (mlPrediction != null) {
-                "ML risk score: $riskScore/100"
-            } else {
-                "Heuristic risk: $riskScore/100"
-            }
+            tvRiskPercent.text = getString(
+                if (mlPrediction != null) R.string.risk_ml else R.string.risk_heuristic,
+                riskScore
+            )
             progressRisk.progress = riskScore
             tvResult.text = label
-            tvCategory.text = "Category: $sourceCategory"
+            tvCategory.text = getString(R.string.category_prefix, sourceCategory)
             tvSummary.text = details
 
             historyList.add(0, HistoryItem(sender, message, label, sourceCategory, riskScore))
@@ -287,11 +299,11 @@ class MainActivity : AppCompatActivity() {
 
                 try {
                     if (::tvRiskPercent.isInitialized && tvRiskPercent != null) {
-                        tvRiskPercent.text = "Risk: $riskScore%"
+                        tvRiskPercent.text = getString(R.string.risk_percent_value, riskScore)
                         progressRisk.progress = riskScore
                         tvResult.text = label
-                        tvCategory.text = "Category: $category"
-                        tvSummary.text = "Screening signals: $category"
+                        tvCategory.text = getString(R.string.category_prefix, category)
+                        tvSummary.text = getString(R.string.screening_signals, category)
                     }
                 } catch (e: Exception) {}
 
@@ -352,7 +364,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupLanguageSpinner() {
-        val languages = arrayOf("English", "Hindi", "Tamil")
+        val languages = arrayOf(getString(R.string.language_english), getString(R.string.language_hindi), getString(R.string.language_tamil))
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, languages)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerLanguage.adapter = adapter
@@ -374,8 +386,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (langCode != prefs.getString("selected_lang", "en")) {
                     prefs.edit().putString("selected_lang", langCode).apply()
-                    setAppLocale(langCode)
-                    recreate()
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(langCode))
                 }
             }
 
@@ -383,20 +394,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAppLocale(langCode: String) {
-        val locale = java.util.Locale(langCode)
-        java.util.Locale.setDefault(locale)
-        val config = android.content.res.Configuration()
-        config.setLocale(locale)
-        baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
-    }
 
     private fun setupDarkMode() {
         val enabled = prefs.getBoolean("dark_mode", false)
         switchDarkMode.isChecked = enabled
         switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
             prefs.edit().putBoolean("dark_mode", isChecked).apply()
-            recreate()
+            AppCompatDelegate.setDefaultNightMode(
+                if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            )
         }
     }
 

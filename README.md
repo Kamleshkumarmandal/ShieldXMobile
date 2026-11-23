@@ -22,7 +22,8 @@ ShieldXMobile is a Kotlin Android application that screens SMS messages with an 
 
 ## Direct APK download
 
-[**Download ShieldXMobile – Android APK**](https://api.github.com/repos/Kamleshkumarmandal/ShieldXMobile/actions/artifacts/14759973425/zip)
+[**Download ShieldXMobile – Android APK**]
+sandbox:/mnt/data/ShieldXMobile-debug.apk
 
 The download is a ZIP archive containing `app-debug.apk`. Extract the ZIP, then install `app-debug.apk` on an Android device. This debug build passed the Android unit tests and APK build in [GitHub Actions](https://github.com/Kamleshkumarmandal/ShieldXMobile/actions/runs/45037675054).
 

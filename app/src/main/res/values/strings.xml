@@ -33,4 +33,11 @@
     <string name="enter_message_first">Please enter a message first.</string>
     <string name="enter_details">Please enter sender and message details.</string>
     <string name="unknown_sender">Unknown Sender</string>
+    <string name="language_english">English</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_tamil">Tamil</string>
+    <string name="risk_default">Risk Percent: 0%</string>
+    <string name="category_default">Category: None</string>
+    <string name="result_default">Result: Waiting</string>
+    <string name="summary_default">Analysis Summary will appear here.</string>
 </resources>

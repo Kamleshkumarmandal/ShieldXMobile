@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   android:
@@ -43,3 +43,19 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
+
+      - name: Publish direct APK release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.1.0
+          target_commitish: main
+          name: ShieldXMobile v1.1.0
+          body: |
+            ShieldXMobile v1.1.0
+
+            Includes the first-time PIN confirmation, Tamil language localization, and light/dark theme fixes.
+          files: app/build/outputs/apk/debug/app-debug.apk
+          overwrite_files: true
+          make_latest: true
+          fail_on_unmatched_files: true

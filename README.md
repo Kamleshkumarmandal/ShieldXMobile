@@ -20,20 +20,15 @@ ShieldXMobile is a Kotlin Android application that screens SMS messages with an 
 - English, Hindi and Tamil language selection.
 - Light/dark theme settings.
 
-## Latest build — Tamil and dark-mode fixes
+## Latest build — v1.1.0
 
-The latest successful Android build includes the Tamil localization and light/dark theme fixes from [PR #3](https://github.com/Kamleshkumarmandal/ShieldXMobile/pull/3).
+The latest release includes first-time PIN confirmation, Tamil language localization, and light/dark theme fixes.
 
-[**Download the latest Android build package**](https://github.com/Kamleshkumarmandal/ShieldXMobile/actions/runs/45245216521) from GitHub Actions. Open the run, then under **Artifacts** download **ShieldXMobile-debug-apk**. GitHub provides this as a ZIP; extract it and install `app-debug.apk`. This build is not yet published as a direct APK release asset.
-
-## Direct APK download
-
-[**Download ShieldXMobile.apk — Android app**](https://github.com/Kamleshkumarmandal/ShieldXMobile/releases/download/v1.0.0/app-debug.apk)
+[**Download ShieldXMobile v1.1.0 — Android APK**](https://github.com/Kamleshkumarmandal/ShieldXMobile/releases/download/v1.1.0/app-debug.apk)
 
 Download the APK directly and install it on your Android device. No ZIP extraction is needed.
 
-**Release:** [ShieldXMobile v1.0.0](https://github.com/Kamleshkumarmandal/ShieldXMobile/releases/tag/v1.0.0). This release includes the first-time PIN confirmation update from [PR #1](https://github.com/Kamleshkumarmandal/ShieldXMobile/pull/1).
-
+**Release:** [ShieldXMobile v1.1.0](https://github.com/Kamleshkumarmandal/ShieldXMobile/releases/tag/v1.1.0).
 
 ## Security and reliability changes
 

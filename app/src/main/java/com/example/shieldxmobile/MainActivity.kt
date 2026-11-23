@@ -245,24 +245,23 @@ class MainActivity : AppCompatActivity() {
                 "Rule-based SMS screening (ML model unavailable)"
             }
             val heuristicDetails = if (heuristic.matchedSignals.isEmpty()) {
-                "No high-risk keyword patterns matched."
+                getString(R.string.no_high_risk_patterns)
             } else {
-                "Rule signals: " + heuristic.matchedSignals.joinToString(separator = " · ")
+                getString(R.string.rule_signals, heuristic.matchedSignals.joinToString(separator = " · "))
             }
             val details = listOfNotNull(
                 mlPrediction?.summary,
                 heuristicDetails,
-                "Screening results are not a guarantee that a message is safe or fraudulent."
+                getString(R.string.screening_disclaimer)
             ).joinToString("\n")
 
-            tvRiskPercent.text = if (mlPrediction != null) {
-                "ML risk score: $riskScore/100"
-            } else {
-                "Heuristic risk: $riskScore/100"
-            }
+            tvRiskPercent.text = getString(
+                if (mlPrediction != null) R.string.risk_ml else R.string.risk_heuristic,
+                riskScore
+            )
             progressRisk.progress = riskScore
             tvResult.text = label
-            tvCategory.text = "Category: $sourceCategory"
+            tvCategory.text = getString(R.string.category_prefix, sourceCategory)
             tvSummary.text = details
 
             historyList.add(0, HistoryItem(sender, message, label, sourceCategory, riskScore))
@@ -300,11 +299,11 @@ class MainActivity : AppCompatActivity() {
 
                 try {
                     if (::tvRiskPercent.isInitialized && tvRiskPercent != null) {
-                        tvRiskPercent.text = "Risk: $riskScore%"
+                        tvRiskPercent.text = getString(R.string.risk_percent_value, riskScore)
                         progressRisk.progress = riskScore
                         tvResult.text = label
-                        tvCategory.text = "Category: $category"
-                        tvSummary.text = "Screening signals: $category"
+                        tvCategory.text = getString(R.string.category_prefix, category)
+                        tvSummary.text = getString(R.string.screening_signals, category)
                     }
                 } catch (e: Exception) {}
 

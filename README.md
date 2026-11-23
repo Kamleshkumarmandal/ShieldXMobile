@@ -20,6 +20,12 @@ ShieldXMobile is a Kotlin Android application that screens SMS messages with an 
 - English, Hindi and Tamil language selection.
 - Light/dark theme settings.
 
+## Latest build — Tamil and dark-mode fixes
+
+The latest successful Android build includes the Tamil localization and light/dark theme fixes from [PR #3](https://github.com/Kamleshkumarmandal/ShieldXMobile/pull/3).
+
+[**Download the latest Android build package**](https://github.com/Kamleshkumarmandal/ShieldXMobile/actions/runs/45245216521) from GitHub Actions. Open the run, then under **Artifacts** download **ShieldXMobile-debug-apk**. GitHub provides this as a ZIP; extract it and install `app-debug.apk`. This build is not yet published as a direct APK release asset.
+
 ## Direct APK download
 
 [**Download ShieldXMobile.apk — Android app**](https://github.com/Kamleshkumarmandal/ShieldXMobile/releases/download/v1.0.0/app-debug.apk)

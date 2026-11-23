@@ -9,7 +9,7 @@
 
     <string name="language_title">Language</string>
     <string name="select_language">Select Language</string>
-    <string name="label_dark_mode">Dark Mode Active</string>
+    <string name="label_dark_mode">Dark Mode</string>
 
     <string name="privacy_title">Privacy &amp; Auto Protection</string>
     <string name="privacy_info">ShieldX scans SMS locally on your device. We do not upload your personal SMS data anywhere. Auto protection is optional and can be disabled anytime.</string>
@@ -37,8 +37,4 @@
     <string name="language_hindi">Hindi</string>
     <string name="language_tamil">Tamil</string>
 
-    <string name="language_english">English</string>
-    <string name="language_hindi">Hindi</string>
-    <string name="language_tamil">Tamil</string>
-    <string name="dark_mode_label">Dark Mode</string>
 </resources>

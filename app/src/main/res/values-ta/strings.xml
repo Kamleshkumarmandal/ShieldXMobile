@@ -29,4 +29,12 @@
     <string name="language_english">ஆங்கிலம்</string>
     <string name="language_hindi">இந்தி</string>
     <string name="language_tamil">தமிழ்</string>
+    <string name="risk_percent_value">ஆபத்து சதவீதம்: %1$d%%</string>
+    <string name="risk_ml">ML ஆபத்து மதிப்பெண்: %1$d/100</string>
+    <string name="risk_heuristic">விதி அடிப்படையிலான ஆபத்து: %1$d/100</string>
+    <string name="category_prefix">வகை: %1$s</string>
+    <string name="no_high_risk_patterns">அதிக ஆபத்துள்ள முக்கிய சொற்கள் எதுவும் பொருந்தவில்லை.</string>
+    <string name="rule_signals">விதி அறிகுறிகள்: %1$s</string>
+    <string name="screening_disclaimer">இந்த ஆய்வு முடிவு செய்தி பாதுகாப்பானது அல்லது மோசடியானது என்பதை உறுதி செய்யாது.</string>
+    <string name="screening_signals">ஆய்வு அறிகுறிகள்: %1$s</string>
 </resources>

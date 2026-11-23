@@ -22,11 +22,11 @@ ShieldXMobile is a Kotlin Android application that screens SMS messages with an 
 
 ## Direct APK download
 
-[**Download ShieldXMobile – Android APK**](https://api.github.com/repos/Kamleshkumarmandal/ShieldXMobile/actions/artifacts/14759973425/zip)
+[**Download ShieldXMobile – Android APK (ZIP)**](https://api.github.com/repos/Kamleshkumarmandal/ShieldXMobile/actions/artifacts/14845936123/zip)
 
-The download is a ZIP archive containing `app-debug.apk`. Extract the ZIP, then install `app-debug.apk` on an Android device. This debug build passed the Android unit tests and APK build in [GitHub Actions](https://github.com/Kamleshkumarmandal/ShieldXMobile/actions/runs/45037675054).
+The ZIP contains `app-debug.apk`. Download it, extract the ZIP, then install `app-debug.apk` on an Android device. This build includes the first-time PIN confirmation update from [PR #1](https://github.com/Kamleshkumarmandal/ShieldXMobile/pull/1) and passed the Android unit tests and APK build in [GitHub Actions run #45228460849](https://github.com/Kamleshkumarmandal/ShieldXMobile/actions/runs/45228460849).
 
-**Download availability:** This GitHub Actions artifact is retained until **December 6, 2026**. For later builds, open the [latest Android CI runs](https://github.com/Kamleshkumarmandal/ShieldXMobile/actions/workflows/android-ci.yml) and download the `ShieldXMobile-debug-apk` artifact from a successful run.
+**Download availability:** GitHub retains this Actions artifact until **December 7, 2026**. For newer builds, open the [latest Android CI runs](https://github.com/Kamleshkumarmandal/ShieldXMobile/actions/workflows/android-ci.yml) and download the `ShieldXMobile-debug-apk` artifact from a successful run. Actions artifacts are temporary; for a permanent public download, publish the APK as a GitHub Release asset.
 
 ## Security and reliability changes
 
@@ -66,8 +66,8 @@ Open the project folder in Android Studio and allow Gradle sync to finish.
 Windows PowerShell:
 
 ```powershell
-.\gradlew.bat testDebugUnitTest
-.\gradlew.bat assembleDebug
+.\\gradlew.bat testDebugUnitTest
+.\\gradlew.bat assembleDebug
 ```
 
 macOS / Linux:

@@ -37,6 +37,9 @@ class PinActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
     private lateinit var executor: Executor
 
+    // Kept only in memory until the user confirms the first-time PIN.
+    private var pendingPin: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -92,7 +95,25 @@ class PinActivity : AppCompatActivity() {
             }
 
             if (!isPinConfigured()) {
+                val firstEntry = pendingPin
+                if (firstEntry == null) {
+                    pendingPin = enteredPin
+                    etPin.text.clear()
+                    updatePinScreen()
+                    showMessage("Now enter the same 4-digit PIN again to confirm.", error = false)
+                    return@setOnClickListener
+                }
+
+                if (enteredPin != firstEntry) {
+                    pendingPin = null
+                    etPin.text.clear()
+                    updatePinScreen()
+                    showMessage("PINs do not match. Please create your PIN again.", error = true)
+                    return@setOnClickListener
+                }
+
                 savePin(enteredPin)
+                pendingPin = null
                 clearFailedAttempts()
                 showMessage("PIN set successfully", error = false)
                 openMainApp()
@@ -166,9 +187,14 @@ class PinActivity : AppCompatActivity() {
         tvPinSubtitle.text = when {
             locked -> "PIN is locked. Authenticate to reset it."
             configured -> "Enter your 4-digit admin PIN"
-            else -> "Set your 4-digit admin PIN"
+            pendingPin != null -> "Confirm your 4-digit admin PIN"
+            else -> "Create your 4-digit admin PIN"
         }
-        btnPinAction.text = if (configured) "Unlock" else "Set PIN"
+        btnPinAction.text = when {
+            configured -> "Unlock"
+            pendingPin != null -> "Confirm PIN"
+            else -> "Continue"
+        }
         btnPinAction.isEnabled = !locked
         etPin.isEnabled = !locked
         btnChangePinFingerprint.visibility =
@@ -210,8 +236,9 @@ class PinActivity : AppCompatActivity() {
                         .remove(FAILED_ATTEMPTS_KEY)
                         .apply()
 
+                    pendingPin = null
                     etPin.text.clear()
-                    showMessage("Device authentication passed. Set a new PIN.", error = false)
+                    showMessage("Device authentication passed. Create a new PIN.", error = false)
                     updatePinScreen()
                 }
 

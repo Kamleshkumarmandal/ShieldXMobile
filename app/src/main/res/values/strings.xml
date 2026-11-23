@@ -37,4 +37,12 @@
     <string name="language_hindi">Hindi</string>
     <string name="language_tamil">Tamil</string>
 
+    <string name="risk_percent_value">Risk Percent: %1$d%%</string>
+    <string name="risk_ml">ML risk score: %1$d/100</string>
+    <string name="risk_heuristic">Heuristic risk: %1$d/100</string>
+    <string name="category_prefix">Category: %1$s</string>
+    <string name="no_high_risk_patterns">No high-risk keyword patterns matched.</string>
+    <string name="rule_signals">Rule signals: %1$s</string>
+    <string name="screening_disclaimer">Screening results are not a guarantee that a message is safe or fraudulent.</string>
+    <string name="screening_signals">Screening signals: %1$s</string>
 </resources>
